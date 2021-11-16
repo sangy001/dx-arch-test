@@ -1,0 +1,48 @@
+- describe: 01有效的请求
+  path: /admin/ldap
+  method: POST
+  header:
+    authorization: AUTH
+  query:
+    ~
+  body:
+    bind_credential: LDAP_PASSWORD
+    bind_dn: LDAP_USER
+    full_sync_period: "-1"
+    ldap_host: LDAP_HOST
+    ldap_protocol: ldap
+    name: NAME
+    provider_type: other
+    start_tls: "false"
+    user_object_classes: "inetOrgPerson, organizationalPerson"
+    username_ldap_attribute: uid
+    users_dn: LDAP_DN
+  status_code: 201
+  response:
+    ~
+- describe: 02无效的auth
+  path: /admin/ldap
+  method: POST
+  header:
+    authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    bind_credential: LDAP_PASSWORD
+    bind_dn: LDAP_USER
+    full_sync_period: "-1"
+    ldap_host: LDAP_HOST
+    ldap_protocol: ldap
+    name: NAME
+    provider_type: other
+    start_tls: "false"
+    user_object_classes: "inetOrgPerson, organizationalPerson"
+    username_ldap_attribute: uid
+    users_dn: LDAP_DN
+  status_code: 401
+  response:
+    code: TK002
+    message: 'Failed to verify token, please checkout params!'
+    details: 'oidc: malformed jwt: square/go-jose: compact JWS format must have three parts'
+
+

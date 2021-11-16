@@ -1,0 +1,44 @@
+- describe: 01有效的请求
+  path: /admin/ldap-test
+  method: POST
+  header:
+    authorization: AUTH
+  query:
+    ~
+  body:
+    action: testAuthentication
+    bind_credential: LDAP_PASSWORD
+    bind_dn:  LDAP_USER
+    component_id: ""
+    connection_timeout: "300"
+    connection_url: "ldap://{LDAP_HOST}"
+    start_tls: "false"
+    use_truststore_spi: "ldapsOnly"
+  status_code: 204
+  response:
+    ~
+- describe: 02无效的auth
+  path: /admin/ldap-test
+  method: POST
+  header:
+    authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    action: testAuthentication
+    bind_credential: LDAP_PASSWORD
+    bind_dn:  LDAP_USER
+    component_id: ""
+    connection_timeout: "300"
+    connection_url: "ldap://{LDAP_HOST}"
+    start_tls: "false"
+    use_truststore_spi: "ldapsOnly"
+  status_code: 401
+  response:
+    code: TK002
+    message: 'Failed to verify token, please checkout params!'
+    details: 'oidc: malformed jwt: square/go-jose: compact JWS format must have three parts'
+
+
+
+

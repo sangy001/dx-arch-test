@@ -1,0 +1,33 @@
+- describe: 01有效的请求
+  path: /portal/product-nav/default-yaml
+  method: GET
+  header:
+    authorization: AUTH
+  query:
+    ~
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /portal/product-nav/default-yaml
+  method: GET
+  header:
+    authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    ~
+  status_code: 401
+  response:
+    code: TK002
+    message: 'Failed to verify token, please checkout params!'
+    details: 'oidc: malformed jwt: square/go-jose: compact JWS format must have three parts'
+
+
+
+
+
+
+

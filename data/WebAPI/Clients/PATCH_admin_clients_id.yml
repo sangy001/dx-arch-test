@@ -1,0 +1,34 @@
+- describe: 01有效的请求
+  path: /admin/clients/{CLIENT_ID}
+  method: PATCH
+  header:
+    authorization: AUTH
+  query:
+    ~
+  body:
+    client_id: CLIENT_NAME
+    enabled: True
+    name: CLIENT_NAME
+    redirect_uris:
+      - "*"
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /admin/clients/{CLIENT_ID}
+  method: PATCH
+  header:
+    authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    client_id: CLIENT_NAME
+    enabled: True
+    name: CLIENT_NAME
+    redirect_uris:
+      - "*"
+  status_code: 401
+  response:
+    code: TK002
+    message: 'Failed to verify token, please checkout params!'
+    details: 'oidc: malformed jwt: square/go-jose: compact JWS format must have three parts'

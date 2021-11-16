@@ -1,0 +1,27 @@
+- describe: 01有效的请求
+  path: /product/client-webhook-struct
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /product/client-webhook-struct
+  method: GET
+  header:
+    authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    ~
+  status_code: 401
+  response:
+    code: "AN002"
+    message: "Failed to verify anyproduct basic auth "
+    details: "bad client id or client secreat , please checkout!"
+

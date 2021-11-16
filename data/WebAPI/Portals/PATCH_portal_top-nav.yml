@@ -1,0 +1,32 @@
+- describe: 01有效的请求
+  path: /portal/top-nav
+  method: PATCH
+  header:
+    authorization: AUTH
+    Content-Type: multipart/form-data
+  query:
+    platform_name: PLATFORM_NAME
+    portal_url: ""
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /portal/top-nav
+  method: PATCH
+  header:
+    authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+    Content-Type: multipart/form-data
+  query:
+    platform_name: PLATFORM_NAME
+    portal_url: ""
+  body:
+    ~
+  status_code: 401
+  response:
+    code: TK002
+    message: 'Failed to verify token, please checkout params!'
+    details: 'oidc: malformed jwt: square/go-jose: compact JWS format must have three parts'
+
+

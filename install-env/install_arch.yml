@@ -1,0 +1,24 @@
+---
+- name: ready_install_env
+  hosts: first-master
+  vars_files: /root/ansible/vars.yml
+  tasks:
+  - name: wait dce ready
+    shell: sleep 300
+
+  - name: check whether install dce successfully
+    shell: |
+      curl -kI https://{{controller_vip}}:443/ | grep HTTP
+
+  - name: copyfile
+    copy: src=install-arch.sh dest=/root
+
+  - name: ready env
+    shell: |
+      yum install expect -y
+
+  - name: exec install bash
+    shell: |
+      cd /root
+      chmod 777 install-arch.sh
+      ./install-arch.sh

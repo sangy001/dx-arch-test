@@ -1,0 +1,68 @@
+- describe: 01有效的请求
+  path: /product/client-webhooks/{WEBHOOK_ID}
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /product/client-webhooks/{WEBHOOK_ID}
+  method: GET
+  header:
+    authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    ~
+  status_code: 401
+  response:
+    code: "AN002"
+    message: "Failed to verify anyproduct basic auth "
+    details: "bad client id or client secreat , please checkout!"
+- describe: 03_WEBHOOK_ID_不存在
+  path: /product/client-webhooks/23ecf201-19fe-40e8-84a1-923bc3824e48
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "CW004"
+    message: "Client Webhook not found"
+    details: "client webhook not found"
+- describe: 03_WEBHOOK_ID_不规范
+  path: /product/client-webhooks/23ecf201-19fe-40e8-84a1-923bc3824e
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "CW004"
+    message: "Client Webhook not found"
+    details: "client webhook not found"
+- describe: 03_WEBHOOK_ID_不规范
+  path: /product/client-webhooks/
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    ~
+  status_code: 404
+  response:
+    ~
+
+

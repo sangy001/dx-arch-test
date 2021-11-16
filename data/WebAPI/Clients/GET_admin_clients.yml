@@ -1,0 +1,30 @@
+- describe: 01有效的请求
+  path: /admin/clients
+  method: GET
+  header:
+    authorization: AUTH
+  query:
+    size: 20
+    page: 1
+    search: ~
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /admin/clients
+  method: GET
+  header:
+    authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    size: 20
+    page: 1
+    search: ~
+  body:
+    ~
+  status_code: 401
+  response:
+    code: TK002
+    message: 'Failed to verify token, please checkout params!'
+    details: 'oidc: malformed jwt: square/go-jose: compact JWS format must have three parts'

@@ -1,0 +1,36 @@
+- describe: 01有效的请求-GET
+  path: /product/client-webhooks/{WEBHOOK_ID}
+  method: PUT
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    name: NAME
+    action: "CREATE"
+    content_type: "application/json"
+    custom_json_data: "{\"id\": \"{{$$.ID$$}}\"}"
+    form_data: []
+    headers:
+      test_action: "get"
+    is_custom_content: True
+    method: "GET"
+    resource_type: "User"
+    url: "http://10.10.121.1"
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /product/client-webhooks/{WEBHOOK_ID}
+  method: PUT
+  header:
+    authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    ~
+  status_code: 401
+  response:
+    code: "AN002"
+    message: "Failed to verify anyproduct basic auth "
+    details: "bad client id or client secreat , please checkout!"

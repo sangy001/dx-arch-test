@@ -1,0 +1,12 @@
+- describe: 01有效的请求
+  path: /version
+  method: GET
+  header:
+    ~
+  query:
+    ~
+  body:
+    ~
+  status_code: 200
+  response:
+    ~

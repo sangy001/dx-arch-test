@@ -1,0 +1,282 @@
+- describe: 01有效的请求
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    ~
+  status_code: 401
+  response:
+    code: "AN002"
+    message: "Failed to verify anyproduct basic auth "
+    details: "bad client id or client secreat , please checkout!"
+- describe: 03正确的query
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 20
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 04_size_is_0
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 0
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 05_size_is_None
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: ~
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 06_page_is_None
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: ~
+    size: 20
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 07_size_is_-1
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: ~
+    size: -1
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "PQ001"
+    message: "Page request is invalid"
+    details: "size is invalid"
+- describe: 08_size_is_fff
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: "fff"
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "PQ001"
+    message: "Page request is invalid"
+    details: "size is invalid"
+- describe: 09_size_is_1.99
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 1.99
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "PQ001"
+    message: "Page request is invalid"
+    details: "size is invalid"
+- describe: 10_page_is_1.99
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 0
+    size: 20
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "PQ001"
+    message: "Page request is invalid"
+    details: "page is invalid"
+- describe: 11_page_is_fff
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: fff
+    size: 20
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "PQ001"
+    message: "Page request is invalid"
+    details: "page is invalid"
+- describe: 12_page_is_fff
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: -1
+    size: 20
+    search: x
+    order_by: name
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "PQ001"
+    message: "Page request is invalid"
+    details: "page is invalid"
+- describe: 13_order_by_is_test
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 20
+    search: x
+    order_by: test
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "CW007"
+    message: "Failed to list client webhook"
+    details: "order by failed: not found field test"
+- describe: 14_order_by_is_num
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 20
+    search: x
+    order_by: 88
+    desc: True
+  body:
+    ~
+  status_code: 400
+  response:
+    code: "CW007"
+    message: "Failed to list client webhook"
+    details: "pq: syntax error at or near \".88\""
+- describe: 15_desc_is_fff
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 20
+    search: x
+    order_by: name
+    desc: fff
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 16_desc_is_-1
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 20
+    search: x
+    order_by: name
+    desc: -1
+  body:
+    ~
+  status_code: 200
+  response:
+    ~
+- describe: 17_desc_is_1.99
+  path: /product/client-webhooks
+  method: GET
+  header:
+    authorization: TOKEN
+  query:
+    page: 1
+    size: 20
+    search: x
+    order_by: name
+    desc: 1.99
+  body:
+    ~
+  status_code: 200
+  response:
+    ~

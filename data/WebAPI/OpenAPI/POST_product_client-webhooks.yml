@@ -1,0 +1,96 @@
+- describe: 01有效的请求-GET
+  path: /product/client-webhooks
+  method: POST
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    name: NAME
+    action: "CREATE"
+    content_type: "application/json"
+    custom_json_data: "{\"id\": \"{{$$.ID$$}}\"}"
+    form_data: []
+    headers:
+      test_action: "get"
+    is_custom_content: True
+    method: "GET"
+    resource_type: "User"
+    url: "http://10.10.121.1"
+  status_code: 200
+  response:
+    ~
+- describe: 02无效的auth
+  path: /product/client-webhooks
+  method: POST
+  header:
+    authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    name: NAME
+    action: "CREATE"
+    content_type: "application/json"
+    custom_json_data: "{\"id\": \"{{$$.ID$$}}\"}"
+    form_data: []
+    headers:
+      test_action: "get"
+    is_custom_content: True
+    method: "GET"
+    resource_type: "User"
+    url: "http://10.10.121.1"
+  status_code: 401
+  response:
+    code: "AN002"
+    message: "Failed to verify anyproduct basic auth "
+    details: "bad client id or client secreat , please checkout!"
+- describe: 03有效的请求-UPDATE
+  path: /product/client-webhooks
+  method: POST
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    action: "UPDATE"
+    content_type: "application/x-www-form-urlencoded"
+    custom_json_data: "{\n    \"id\":\"{{$$.ID$$}}\",\n    \"email\":\"{{$$.Email$$}}\",\n    \"username\":\"{{$$.Username$$}}\",\n    \"last_name\":\"{{$$.LastName$$}}\",\n    \"first_name\":\"{{$$.FirstName$$}}\",\n    \"language\":\"{{$$.Language$$}}\",\n    \"created_at\":{{$$.CreatedAt$$}},\n    \"enabled\":{{$$.Enabled$$}}\n}"
+    form_data:
+      - key: "test"
+        value_with_template_args: "{{$$.ID$$}}"
+      - key: "test2"
+        fixed_value: "string"
+    headers:
+      additionalProp1: "PUT_User"
+    is_custom_content: False
+    method: "PUT"
+    name: NAME
+    resource_type: "User"
+    url: "http://10.10.121.1"
+  status_code: 200
+  response:
+    ~
+- describe: 04有效的请求-DELETE
+  path: /product/client-webhooks
+  method: POST
+  header:
+    authorization: TOKEN
+  query:
+    ~
+  body:
+    name: NAME
+    action: "DELETE"
+    content_type: "application/json"
+    custom_json_data: "{\"id\": \"{{$$.ID$$}}\"}"
+    form_data: []
+    headers:
+      test_action: "delete"
+    is_custom_content: True
+    method: "DELETE"
+    resource_type: "User"
+    url: "http://10.10.121.1"
+  status_code: 200
+  response:
+    ~
+
+

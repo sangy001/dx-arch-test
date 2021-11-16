@@ -1,0 +1,50 @@
+- describe: 01有效的请求
+  path: /admin/idps/{ALIAS}
+  method: PUT
+  header:
+    authorization: AUTH
+  query:
+    ~
+  body:
+    alias: OIDC
+    authorization_url: https://login.microsoftonline.com/{IDP_TENANT_ID}/oauth2/v2.0/authorize
+    client_auth_method: client_secret_basic
+    client_id: IDP_CLIENT_ID
+    client_secret: IDP_CLIENT_SECRET
+    display_name: IDP_NAME
+    enable_auto_link_flow: True
+    enabled: True
+    logout_url: https://login.microsoftonline.com/{IDP_TENANT_ID}/oauth2/v2.0/logout
+    provider_id: oidc
+    token_url: https://login.microsoftonline.com/{IDP_TENANT_ID}/oauth2/v2.0/token
+    userinfo_url: https://graph.microsoft.com/oidc/userinfo
+  status_code: 201
+  response:
+    ~
+- describe: 02无效的auth
+  path: /admin/idps/{ALIAS}
+  method: PUT
+  header:
+    authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwi
+  query:
+    ~
+  body:
+    alias: OIDC
+    authorization_url: https://login.microsoftonline.com/{IDP_TENANT_ID}/oauth2/v2.0/authorize
+    client_auth_method: client_secret_basic
+    client_id: IDP_CLIENT_ID
+    client_secret: IDP_CLIENT_SECRET
+    display_name: IDP_NAME
+    enable_auto_link_flow: True
+    enabled: True
+    logout_url: https://login.microsoftonline.com/{IDP_TENANT_ID}/oauth2/v2.0/logout
+    provider_id: oidc
+    token_url: https://login.microsoftonline.com/{IDP_TENANT_ID}/oauth2/v2.0/token
+    userinfo_url: https://graph.microsoft.com/oidc/userinfo
+  status_code: 401
+  response:
+    code: TK002
+    message: 'Failed to verify token, please checkout params!'
+    details: 'oidc: malformed jwt: square/go-jose: compact JWS format must have three parts'
+
+

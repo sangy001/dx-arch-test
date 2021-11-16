@@ -1,0 +1,47 @@
+---
+- name: ready_install_env
+  hosts: localhost
+  vars_files: /root/ansible/vars.yml
+  tasks:
+  - name: poweredoff vm
+    vmware_guest:
+      hostname: "{{ vsphere_hostname }}"
+      username: "{{ vsphere_username }}"
+      password: "{{ vsphere_password }}"
+      validate_certs: False
+      name: "{{ item }}"
+      state: poweredoff
+    loop: "{{ vm_name }}"
+    register: vmfacts
+  - name: print facts
+    debug:
+       msg: "{{vmfacts}}"
+  - name: Revert to a snapshot
+    vmware_guest_snapshot:
+      hostname: "{{ vsphere_hostname }}"
+      username: "{{ vsphere_username }}"
+      password: "{{ vsphere_password }}"
+      datacenter: "{{ vsphere_datacenter }}"
+      folder: "/{{ vsphere_datacenter }}/vm/"
+      name: "{{ item }}"
+      state: revert
+      snapshot_name: "{{ vm_snapshot_name }}"
+      validate_certs: False
+    loop: "{{ vm_name }}"
+    register: vmfacts
+  - name: print facts
+    debug:
+       msg: "{{vmfacts}}"
+  - name: poweredon vm
+    vmware_guest:
+      hostname: "{{ vsphere_hostname }}"
+      username: "{{ vsphere_username }}"
+      password: "{{ vsphere_password }}"
+      validate_certs: False
+      name: "{{ item }}"
+      state: poweredon
+    loop: "{{ vm_name }}"
+    register: vmfacts
+  - name: print facts
+    debug:
+       msg: "{{vmfacts}}"
